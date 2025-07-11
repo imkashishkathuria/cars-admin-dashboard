@@ -6,10 +6,13 @@ import PageReveal from './PageReveal';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FaChevronDown } from 'react-icons/fa6';
 import StatusHeader from './StatusHeader';
+import Modal from './Modal';
 
 const DashboardTable = ({ listings = [], page, total, pageSize }) => {
   const totalPages = Math.ceil(total / pageSize);
   const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
@@ -84,9 +87,12 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
                   </button>
                 </td>
                 <td className='px-3 py-2'>
-                  <button className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'>
+                  <button onClick={() => setIsModalOpen(true)} className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'>
                     Edit
                   </button>
+                  {isModalOpen && (
+                    <Modal onClose={() => setIsModalOpen(false)} />
+                  )}
                 </td>
 
               </tr>
