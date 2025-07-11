@@ -1,29 +1,18 @@
 import React from 'react'
-import { MdArrowDropDown, MdSearch  } from 'react-icons/md'
-import {IoIosArrowDown } from 'react-icons/io'
+import {IoBagSharp} from 'react-icons/io5'
+import { AiFillDollarCircle } from "react-icons/ai";
+import { FaCarSide } from "react-icons/fa6";
+import { GrHostMaintenance } from "react-icons/gr";
+
+import Card from './Card'
 
 const FilterBar = () => {
   return (
-    <div className='flex justify-between items-center'>
-      <div className='flex gap-3'>
-        {["PDF", "Print", "Excel", "CSV", "Show 50 rows"].map((item, index, arr) => (
-          <button key={index} className='px-9 py-3 items-center bg-[#5d57e9] hover:bg-[#5d57e9]/80 text-white rounded-[5px] cursor-pointer'>
-              {index === arr.length-1 ? (
-                <div className='flex gap-2 items-center'>
-                  <IoIosArrowDown  />
-                  {item}
-                </div>
-              ) : (item)}
-            </button>
-            
-        ))}
-      </div>
-    <div className='inline-flex'>
-      <div className="flex gap-[10px] items-center bg-[#2e374a] p-[10px] rounded-[10px]">
-        <MdSearch />
-        <input type="text" placeholder="Search..." className="bg-transparent text-[var(--text)]" />
-      </div>
-    </div>
+    <div className='flex justify-between items-center '>
+      <Card heading={"Total number of bookings"} number={"2,659"} icon={<IoBagSharp size={24} />}/>
+      <Card heading={"Total revenue generated"} number={"$ 2,666,.3K"} icon={<AiFillDollarCircle size={24} />}/>
+      <Card heading={"Available cars"} number={"10,000"} icon={<FaCarSide size={24} />}/>
+      <Card heading={"Recent maintainence"} number={"49.5%"} icon={<GrHostMaintenance size={24} />}/>
     </div>
   )
 }
