@@ -1,10 +1,7 @@
 "use client"
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import PageReveal from './PageReveal';
-import { IoIosArrowDown } from 'react-icons/io';
-import { FaChevronDown } from 'react-icons/fa6';
 import StatusHeader from './StatusHeader';
 import Modal from './Modal';
 
@@ -15,7 +12,7 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentListing, setCurrentListing] = useState(null);
-  const [listingsData, setListingsData] = useState(listings); // use local copy
+  const [listingsData, setListingsData] = useState(listings); 
 
   const handleUpdate = (updatedListing) => {
     setListingsData((prev) =>
@@ -30,17 +27,11 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
     router.push(`/?page=${newPage}`)
   }
 
-  const [selectedStatus, setSelectedStatus] = useState(null); // in DashboardTable
+  const [selectedStatus, setSelectedStatus] = useState(null); 
 
   const filteredListings = selectedStatus
     ? listingsData.filter((listing) => listing.status === selectedStatus)
     : listingsData;
-
-
-  const handleStatusFilter = (status) => {
-    console.log("Filter by:", status);
-    // Future: you can refetch with filter here
-  };
 
 
   // console.log("lisings: ", listings);

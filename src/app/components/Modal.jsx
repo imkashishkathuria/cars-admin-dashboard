@@ -145,10 +145,6 @@ const Modal = ({ onClose, listing, onUpdate }) => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                             <button onClick={handleSubmit} type='submit' className='p-[15px] bg-teal-600 text-[var(--text)] text-lg rounded-[5px] cursor-pointer' >Update</button>
                         </form>
                     </div>

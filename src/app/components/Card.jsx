@@ -1,6 +1,4 @@
 import React from 'react'
-import { MdArrowDropDown, MdSearch, MdSupervisedUserCircle  } from 'react-icons/md'
-import {IoIosArrowDown } from 'react-icons/io'
 
 const Card = ({heading, number, icon}) => {
   return (
