@@ -49,14 +49,14 @@ const Modal = ({ onClose, listing, onUpdate }) => {
     return (
         <AnimatePresence>
             <motion.div
-                className="fixed top-0 left-0 right-0 bottom-0 z-[999] flex justify-center items-start mt-10 mb-5 overflow-y-auto opacity-0  transition-opacity duration-300 "
+                className="fixed top-0 left-0 right-0 bottom-0 z-[999] flex justify-center items-start  overflow-y-auto place-items-center opacity-0 backdrop-blur-[1px]  transition-opacity duration-300 "
 
                 variants={backdrop}
                 initial="hidden"
                 animate="visible"
                 exit="exit">
                 <motion.div
-                    className=" relative mx-auto w-2/3 rounded-lg overflow-hidden shadow-sm bg-white"
+                    className=" relative mx-auto w-2/3 mt-10 rounded-lg overflow-hidden shadow-sm bg-white"
                     variants={modal}
                     initial="hidden"
                     animate="visible"
