@@ -1,7 +1,29 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Modal = ({ onClose }) => {
+const Modal = ({ onClose, listing, onUpdate }) => {
+
+    const [formData, setFormData] = useState({
+        booking_id: listing?.booking_id || '',
+        client: listing?.client || '',
+        unit: listing?.unit || '',
+        return: listing?.return || '',
+        status: listing?.status || '',
+    });
+
+    const handleChange = (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onUpdate(formData);
+        onClose();
+    };
 
     const backdrop = {
         hidden: { opacity: 0 },
@@ -58,50 +80,76 @@ const Modal = ({ onClose }) => {
                             <div className='flex gap-4 px-4 mb-5'>
                                 <div className='flex flex-col gap-2 text-slate-800 w-full  text-xl'>
                                     Booking Id
-                                    <input type="text" placeholder='booking id' name='booking_id' className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full' required />
+                                    <input 
+                                        type="text" 
+                                        placeholder='booking id' 
+                                        name='booking_id' 
+                                        className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full' 
+                                        value={formData.booking_id}
+                                        onChange={handleChange} required />
                                 </div>
                                 <div className='flex flex-col gap-2 text-slate-800 w-full  text-xl'>
                                     Client
-                                    <input type="text" placeholder='client' name='client' className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px] w-full' required /></div>
+                                    <input 
+                                        type="text" 
+                                        placeholder='client' 
+                                        name='client' 
+                                        className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px] w-full' 
+                                        value={formData.client}
+                                        onChange={handleChange} required /></div>
 
 
                             </div>
                             <div className='flex gap-4 px-4 mb-5'>
                                 <div className='flex flex-col gap-2 text-slate-800 w-full text-xl'>
                                     Unit
-                                    <input type="text" placeholder='unit' name='unit' className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full' />
+                                    <input 
+                                        type="text" 
+                                        placeholder='unit' 
+                                        name='unit' 
+                                        className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full'
+                                        value={formData.unit}
+                                        onChange={handleChange} />
                                 </div>
                                 <div className='flex flex-col gap-2 text-slate-800 w-full  text-xl'>
                                     Return Date
-                                    <input type="date" placeholder='' name='date' className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full' required />
+                                    <input 
+                                        type="text" 
+                                        placeholder='return date' 
+                                        name='return' 
+                                        className='p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm border-2 border-[#2e374a] rounded-[5px]  w-full'
+                                        value={formData.return}
+                                        onChange={handleChange} required />
                                 </div>
                             </div>
                             <div className='flex gap-4 px-4 mb-6'>
-                            <div className='flex flex-col gap-2 text-slate-800 w-full  text-xl'>
-                                Status
-                                <div className="w-[50%] ">
-                                    <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-700">
-                                        
-                                    </label>
-                                    <select
-                                        id="status"
-                                        name="status"
-                                        className="p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm  border-2 border-[#2e374a] rounded-[5px] w-full"
-                                    >
-                                        <option value="">Select status</option>
-                                        <option value="Approved">Approved</option>
-                                        <option value="Rejected">Rejected</option>
-                                        <option value="Pending">Pending</option>
-                                    </select>
+                                <div className='flex flex-col gap-2 text-slate-800 w-full  text-xl'>
+                                    Status
+                                    <div className="w-[50%] ">
+                                        <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-700">
 
+                                        </label>
+                                        <select
+                                            id="status"
+                                            name="status"
+                                            className="p-[20px] bg-[var(--bg)] text-[var(--text)] text-sm  border-2 border-[#2e374a] rounded-[5px] w-full"
+                                            value={formData.status}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select status</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Rejected">Rejected</option>
+                                            <option value="Pending">Pending</option>
+                                        </select>
+
+                                    </div>
                                 </div>
                             </div>
-                            </div>
 
 
 
 
-                            <button type='submit' className='p-[15px] bg-teal-600 text-[var(--text)] text-lg rounded-[5px] cursor-pointer' >Update</button>
+                            <button onClick={handleSubmit} type='submit' className='p-[15px] bg-teal-600 text-[var(--text)] text-lg rounded-[5px] cursor-pointer' >Update</button>
                         </form>
                     </div>
                 </motion.div>

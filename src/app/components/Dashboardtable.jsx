@@ -9,10 +9,21 @@ import StatusHeader from './StatusHeader';
 import Modal from './Modal';
 
 const DashboardTable = ({ listings = [], page, total, pageSize }) => {
+
   const totalPages = Math.ceil(total / pageSize);
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentListing, setCurrentListing] = useState(null);
+  const [listingsData, setListingsData] = useState(listings); // use local copy
+
+  const handleUpdate = (updatedListing) => {
+    setListingsData((prev) =>
+      prev.map((item) =>
+        item.booking_id === updatedListing.booking_id ? updatedListing : item
+      )
+    );
+  };
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
@@ -22,8 +33,8 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
   const [selectedStatus, setSelectedStatus] = useState(null); // in DashboardTable
 
   const filteredListings = selectedStatus
-    ? listings.filter((listing) => listing.status === selectedStatus)
-    : listings;
+    ? listingsData.filter((listing) => listing.status === selectedStatus)
+    : listingsData;
 
 
   const handleStatusFilter = (status) => {
@@ -87,11 +98,17 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
                   </button>
                 </td>
                 <td className='px-3 py-2'>
-                  <button onClick={() => setIsModalOpen(true)} className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'>
+                  <button onClick={() => {
+                    setCurrentListing(listing);
+                    setIsModalOpen(true)
+                  }
+                  } className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'>
                     Edit
                   </button>
                   {isModalOpen && (
-                    <Modal onClose={() => setIsModalOpen(false)} />
+                    <Modal onClose={() => setIsModalOpen(false)}
+                      listing={currentListing}
+                      onUpdate={handleUpdate} />
                   )}
                 </td>
 
