@@ -1,10 +1,9 @@
 import React from 'react'
 
-import Sidebar from '@/app/components/Sidebar'
-import Header from '@/app/components/Header'
-import FilterBar from '@/app/components/FilterBar'
-import DashboardTable from '@/app/components/Dashboardtable'
-import PageReveal from '@/app/components/PageReveal'
+import Sidebar from '../app/components/Sidebar'
+import Header from '../app/components/Header'
+import FilterBar from '../app/components/FilterBar'
+import DashboardTable from '../app/components/Dashboardtable'
 
 export async function getServerSideProps(context) {
   const { query } = context;
