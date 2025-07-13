@@ -1,9 +1,10 @@
 "use client"
 import { useRouter } from 'next/router';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageReveal from './PageReveal';
 import StatusHeader from './StatusHeader';
 import Modal from './Modal';
+import toast from 'react-hot-toast';
 
 const DashboardTable = ({ listings = [], page, total, pageSize }) => {
 
@@ -12,22 +13,30 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentListing, setCurrentListing] = useState(null);
-  const [listingsData, setListingsData] = useState(listings); 
+  const [listingsData, setListingsData] = useState(listings);
+
+  useEffect(() => {
+    setListingsData(listings);
+  }, [listings]);
+
 
   const handleUpdate = (updatedListing) => {
     setListingsData((prev) =>
       prev.map((item) =>
         item.booking_id === updatedListing.booking_id ? updatedListing : item
       )
+
     );
+    toast.success("Listing updated successfully !")
   };
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
     router.push(`/?page=${newPage}`)
+    // router.reload();
   }
 
-  const [selectedStatus, setSelectedStatus] = useState(null); 
+  const [selectedStatus, setSelectedStatus] = useState(null);
 
   const filteredListings = selectedStatus
     ? listingsData.filter((listing) => listing.status === selectedStatus)

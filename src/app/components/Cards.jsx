@@ -6,7 +6,7 @@ import { GrHostMaintenance } from "react-icons/gr";
 
 import Card from './Card'
 
-const FilterBar = () => {
+const Cards = () => {
   return (
     <div className='flex justify-between items-center '>
       <Card heading={"Total number of bookings"} number={"2,659"} icon={<IoBagSharp size={24} />}/>
@@ -17,4 +17,4 @@ const FilterBar = () => {
   )
 }
 
-export default FilterBar
+export default Cards

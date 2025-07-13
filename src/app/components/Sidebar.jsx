@@ -88,7 +88,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 px-4 pt-6 pb-3 bg-[var(--bgSoft)]">
+    <div className="fixed left-0 top-0  h-screen flex flex-col gap-3 px-4 pt-6 pb-3 bg-[var(--bgSoft)]">
       <div className="flex gap-3 items-center">
         <Image
           src="/noavatar.png"
