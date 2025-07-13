@@ -1,11 +1,12 @@
 "use client"
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import PageReveal from './PageReveal';
 import StatusHeader from './StatusHeader';
 import Modal from './Modal';
 import toast from 'react-hot-toast';
 import LoginModal from './LoginModal';
+import { useUser } from '@/context/userContext';
 
 const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false }) => {
 
@@ -36,6 +37,32 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
     if (newPage < 1 || newPage > totalPages) return;
     router.push(`/?page=${newPage}`)
     // router.reload();
+  }
+
+  const { user } = useUser();
+
+  const handleAction = async (id, action) => {
+    if(!user){
+      toast.error("You must be logged in");
+      return;
+    }
+    const res = await fetch(`/api/${action}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id, user })
+    });
+
+    const data = await res.json();
+    if(res.ok){
+      toast.success(data.message);
+      router.replace(router.asPath);
+    }
+    else{
+      toast.error(data.error || "Something went wrong");
+    }
+
   }
 
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -90,12 +117,16 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
 
 
                 <td className='px-3 py-2'>
-                  <button className='bg-green-600 px-5 py-2 ml-18 rounded-[8px] cursor-pointer hover:bg-green-600/70'>
+                  <button 
+                    onClick={()=>handleAction(listing.id, "approve")}
+                    className='bg-green-600 px-5 py-2 ml-18 rounded-[8px] cursor-pointer hover:bg-green-600/70'>
                     Approve
                   </button>
                 </td>
                 <td className='px-3 py-2'>
-                  <button className='bg-red-500 px-8 py-2  rounded-[8px] cursor-pointer hover:bg-red-500/90'>
+                  <button 
+                    onClick={()=>handleAction(listing.id, "reject")}
+                    className='bg-red-500 px-8 py-2  rounded-[8px] cursor-pointer hover:bg-red-500/90'>
                     Reject
                   </button>
                 </td>
@@ -115,8 +146,8 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
                       onClick={() => {
                         setCurrentListing(listing);
                         setIsModalOpen(true);
-                        setIsLoginModal(true);
-                        toast("Please sign in to enable editing!");
+                        // setIsLoginModal(true);
+                        toast.error("You must be logged in");
                         }
                         }     
                       className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'
@@ -125,9 +156,9 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
                   </button>
                   )
                   }
-                  {isLoginModal && isLoginModal && (
+                  {/* {isLoginModal && isLoginModal && (
                     <LoginModal onClose={() => setIsLoginModal(false)} />
-                  )} 
+                  )}  */}
                   {!isPublic && isModalOpen && (
                     <Modal onClose={() => setIsModalOpen(false)}
                       listing={currentListing}
