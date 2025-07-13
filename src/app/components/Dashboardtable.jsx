@@ -5,13 +5,15 @@ import PageReveal from './PageReveal';
 import StatusHeader from './StatusHeader';
 import Modal from './Modal';
 import toast from 'react-hot-toast';
+import LoginModal from './LoginModal';
 
-const DashboardTable = ({ listings = [], page, total, pageSize }) => {
+const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false }) => {
 
   const totalPages = Math.ceil(total / pageSize);
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(false);
   const [currentListing, setCurrentListing] = useState(null);
   const [listingsData, setListingsData] = useState(listings);
 
@@ -98,14 +100,35 @@ const DashboardTable = ({ listings = [], page, total, pageSize }) => {
                   </button>
                 </td>
                 <td className='px-3 py-2'>
-                  <button onClick={() => {
-                    setCurrentListing(listing);
-                    setIsModalOpen(true)
-                  }
-                  } className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'>
+                  {!isPublic ? 
+                  (
+                    <button 
+                      onClick={() => {
+                        setCurrentListing(listing);
+                        setIsModalOpen(true)}}     
+                      className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'
+                      >
+                    Edit
+                  </button>)
+                  : (
+                    <button 
+                      onClick={() => {
+                        setCurrentListing(listing);
+                        setIsModalOpen(true);
+                        setIsLoginModal(true);
+                        toast("Please sign in to enable editing!");
+                        }
+                        }     
+                      className='bg-blue-600 px-9 py-2 rounded-[8px] cursor-pointer hover:bg-blue-600/70'
+                      >
                     Edit
                   </button>
-                  {isModalOpen && (
+                  )
+                  }
+                  {isLoginModal && isLoginModal && (
+                    <LoginModal onClose={() => setIsLoginModal(false)} />
+                  )} 
+                  {!isPublic && isModalOpen && (
                     <Modal onClose={() => setIsModalOpen(false)}
                       listing={currentListing}
                       onUpdate={handleUpdate} />

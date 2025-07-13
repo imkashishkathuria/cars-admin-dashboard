@@ -4,8 +4,14 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@/context/userContext";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const LoginModal = ({ onClose, onUpdate }) => {
+  const {user, setUser, login, logout } = useUser();
+  const router = useRouter();
+
   const [signin, setSignIn] = useState("Login");
   const isSignup = signin === "Sign up";
 
@@ -22,13 +28,18 @@ const LoginModal = ({ onClose, onUpdate }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // setUser(name, value);
+    // login(name, value);
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (formData.name || formData.email) {
+    // if (formData.name || formData.email) {
+      login(formData);
+      router.push("/dashboard");
+      toast.success("Logged in successfully!")
       onUpdate(formData); 
-    }
+    // }
     onClose();
   };
 

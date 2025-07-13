@@ -1,11 +1,6 @@
 import React from 'react'
 
-import Sidebar from '../app/components/Sidebar'
-import Header from '../app/components/Header'
-import DashboardTable from '../app/components/Dashboardtable'
-import { Toaster } from 'react-hot-toast'
-import Cards from '../app/components/Cards'
-import Chart from '../app/components/Chart'
+import DashboardLayout from '../app/components/DashboardLayout'
 
 export async function getServerSideProps(context) {
   const { query } = context;
@@ -31,22 +26,12 @@ export async function getServerSideProps(context) {
 export default function Home ({ listings, page, total, pageSize }) {
   return (
     
-    <div className='flex'>
-      <Toaster />
-      {/* Sidebar */}
-      <Sidebar />
-      <div className='ml-[320px] flex-1'>
-      <div className='flex flex-col gap-7 px-7 py-5 '>
-        <Header />
-        <Cards />
-        <DashboardTable listings={listings} page={page} total={total} pageSize={pageSize} />
-        <Chart />
-      </div>
-      </div>
-    </div>
-    
-
-  
+    <DashboardLayout
+    listings={listings}
+    page={page}
+    total={total}
+    pageSize={pageSize}
+    isPublic={true} />
   )
 } 
 

@@ -15,10 +15,16 @@ import {
   MdLogout,
 } from "react-icons/md";
 import LoginModal from "./LoginModal";
+import { useUser } from "@/context/userContext";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
+  const { user, logout } = useUser();
+  const router = useRouter();
+
 
   const handleUpdate = (formData) => {
     setUserData(formData);
@@ -74,11 +80,6 @@ const Sidebar = () => {
           icon: <MdOutlineSettings />,
         },
         {
-          title: "Help",
-          path: "/dashboard/help",
-          icon: <MdHelpCenter />,
-        },
-        {
           title: "Logout",
           path: "/dashboard/logout",
           icon: <MdLogout />,
@@ -101,7 +102,7 @@ const Sidebar = () => {
           className="text-lg cursor-pointer"
           onClick={() => setIsModalOpen(true)}
         >
-          {userData?.name || "user"}
+          {user?.name || "Guest"}
         </p>
 
         {isModalOpen && (
@@ -122,6 +123,10 @@ const Sidebar = () => {
               {cat.list.map((item, idx) => (
                 <div
                   key={idx}
+                  onClick={()=> {logout();
+                    router.push("/");
+                  toast.success("Logged out successfully!");}
+                  }
                   className={`flex gap-2 items-center pl-6 pr-40 py-4 hover:bg-[#2e374a] rounded-[10px] my-2 cursor-pointer ${
                     catIndex === 0 && idx === 0 ? "bg-[#2e374a]" : ""
                   }`}
