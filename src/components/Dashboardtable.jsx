@@ -1,12 +1,13 @@
 "use client"
 import { useRouter } from 'next/router';
-import React, { act, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageReveal from './PageReveal';
 import StatusHeader from './StatusHeader';
 import Modal from './Modal';
 import toast from 'react-hot-toast';
-import LoginModal from './LoginModal';
-import { useUser } from '@/context/userContext';
+// import LoginModal from './LoginModal';
+import { useUser } from 'context/userContext';
+import ActionModal from './ActionModal';
 
 const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false }) => {
 
@@ -14,7 +15,7 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoginModal, setIsLoginModal] = useState(false);
+  const [isApproveModal, setIsApproveModal] = useState(false);
   const [currentListing, setCurrentListing] = useState(null);
   const [listingsData, setListingsData] = useState(listings);
 
@@ -35,18 +36,22 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
-    router.push(`/?page=${newPage}`)
-    // router.reload();
+    if(user){
+      router.push(`/dashboard?page=${newPage}`);
+    }else{
+    router.push(`/?page=${newPage}`)}
+    // router.reload(); 
   }
 
   const { user } = useUser();
 
   const handleAction = async (id, action) => {
     if(!user){
-      toast.error("You must be logged in");
+    toast("Please log in to perform this action", { icon: "🔒" });
       return;
     }
-    const res = await fetch(`/api/${action}`, {
+    try{
+     const res = await fetch(`/api/${action}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -62,6 +67,10 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
     else{
       toast.error(data.error || "Something went wrong");
     }
+  }catch{
+    toast.error("Server error. Try again later.");
+    console.log("Error during approval/rejection:", error);
+  }
 
   }
 
@@ -118,18 +127,26 @@ const DashboardTable = ({ listings = [], page, total, pageSize, isPublic = false
 
                 <td className='px-3 py-2'>
                   <button 
-                    onClick={()=>handleAction(listing.id, "approve")}
+                    onClick={()=>{
+                      handleAction(listing.id, "approve");
+                      setIsApproveModal(true)}}
                     className='bg-green-600 px-5 py-2 ml-18 rounded-[8px] cursor-pointer hover:bg-green-600/70'>
                     Approve
                   </button>
                 </td>
                 <td className='px-3 py-2'>
                   <button 
-                    onClick={()=>handleAction(listing.id, "reject")}
+                    onClick={()=>{
+                      handleAction(listing.id, "reject")
+                      setIsApproveModal(true)
+                    }}
                     className='bg-red-500 px-8 py-2  rounded-[8px] cursor-pointer hover:bg-red-500/90'>
                     Reject
                   </button>
                 </td>
+                {isApproveModal && (
+                  <ActionModal onClose={() => setIsApproveModal(false)} />
+                )}
                 <td className='px-3 py-2'>
                   {!isPublic ? 
                   (

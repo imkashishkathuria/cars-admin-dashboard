@@ -12,9 +12,9 @@ export default function Handler(req, res) {
         const update = db.prepare(`UPDATE listings SET status = 'Approved' WHERE id = ? `);
         update.run(id);
 
-        res.status(200).json({ message: 'Listing approved' });
+        return res.status(200).json({ message: 'Listing approved' });
     }else{
-        res.status(405).json({ message: "Method not allowed" });
+        return res.status(405).json({ message: "Method not allowed" });
     }
 
 

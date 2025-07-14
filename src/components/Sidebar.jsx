@@ -15,7 +15,7 @@ import {
   MdLogout,
 } from "react-icons/md";
 import LoginModal from "./LoginModal";
-import { useUser } from "@/context/userContext";
+import { useUser } from "context/userContext";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
@@ -29,6 +29,13 @@ const Sidebar = () => {
   const handleUpdate = (formData) => {
     setUserData(formData);
   };
+  const HandlelogOut = () => {
+    // if(!user){
+    router.push("/");
+    toast.success("Logged out successfully!");
+    
+    logout();
+  }
 
   const menuItems = [
     {
@@ -123,9 +130,7 @@ const Sidebar = () => {
               {cat.list.map((item, idx) => (
                 <div
                   key={idx}
-                  onClick={()=> {logout();
-                    router.push("/");
-                  toast.success("Logged out successfully!");}
+                  onClick={()=> HandlelogOut()
                   }
                   className={`flex gap-2 items-center pl-6 pr-40 py-4 hover:bg-[#2e374a] rounded-[10px] my-2 cursor-pointer ${
                     catIndex === 0 && idx === 0 ? "bg-[#2e374a]" : ""

@@ -4,7 +4,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useUser } from "@/context/userContext";
+import { useUser } from "context/userContext";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 

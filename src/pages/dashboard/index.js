@@ -1,7 +1,7 @@
 "use client"
 
-import { useUser } from '@/context/userContext';
-import DashboardLayout from '@/src/app/components/DashboardLayout';
+import { useUser } from 'context/userContext';
+import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 

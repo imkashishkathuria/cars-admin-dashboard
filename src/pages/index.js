@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DashboardLayout from '../app/components/DashboardLayout'
+import DashboardLayout from '../components/DashboardLayout'
 
 export async function getServerSideProps(context) {
   const { query } = context;
@@ -9,6 +9,10 @@ export async function getServerSideProps(context) {
 
   console.log("Fetching data from API...");
   const res = await fetch(`http://localhost:3000/api/listings?page=${page}&pageSize=${pageSize}`);
+  if(!res.ok){
+    const errorText = await res.text();
+    console.log("Fetch failed", errorText);
+  } 
   const json = await res.json();
   
   // console.log("json :",json.data);
