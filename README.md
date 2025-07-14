@@ -51,3 +51,5 @@ All Requirements
 
 ✅ 10. /api/listings shows the json of paginated listings
 
+* Click on Guest on Sidebar to Login *
+
