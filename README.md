@@ -36,10 +36,18 @@ All Requirements
 ✅ 2. Dashboard showing a paginated table of listings fetched from a mock api
 
 ✅ 3. Each row in the table has actions:  Approve |  Reject |  Edit
+
 ✅ 4. Clicking "Edit" opens a form with pre-filled listing data that can be updated
+
 ✅ 5. Use Next.js API routes to simulate listing approval/rejection (store in memory or use SQLite)
+
 ✅ 6. Use getServerSideProps for the dashboard page
+
 ✅ 7. Protect dashboard routes (auth logic)
+
 ✅ 8. Use React state management (Context API )
+
 ✅ 9. Add filtering by listing status (approved, pending, rejected)
+
 ✅ 10. /api/listings shows the json of paginated listings
+
