@@ -1,6 +1,6 @@
 // src/pages/_app.js
 import { Inter } from "next/font/google";
-import { UserProvider } from '@/context/userContext';
+import { UserProvider } from "context/userContext";
 import "./../styles/globals.css" // Tailwind/global CSS
 import React from 'react';
 
