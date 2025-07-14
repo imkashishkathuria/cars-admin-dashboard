@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
   const pageSize = 7;
 
   console.log("Fetching data from API...");
-  const res = await fetch(`http://localhost:3000/api/listings?page=${page}&pageSize=${pageSize}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/listings?page=${page}&pageSize=${pageSize}`);
   const json = await res.json();
   
   // console.log("json :",json.data);
