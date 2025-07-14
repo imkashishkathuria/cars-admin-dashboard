@@ -30,8 +30,11 @@ To learn more about Next.js, take a look at the following resources:
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 All Requirements
+
 ✅ 1. Login page with mock authentication
+
 ✅ 2. Dashboard showing a paginated table of listings fetched from a mock api
+
 ✅ 3. Each row in the table has actions:  Approve |  Reject |  Edit
 ✅ 4. Clicking "Edit" opens a form with pre-filled listing data that can be updated
 ✅ 5. Use Next.js API routes to simulate listing approval/rejection (store in memory or use SQLite)
