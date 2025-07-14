@@ -29,9 +29,27 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+All Requirements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✅ 1. Login page with mock authentication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# cars-admin-dashboard
+✅ 2. Dashboard showing a paginated table of listings fetched from a mock api
+
+✅ 3. Each row in the table has actions:  Approve |  Reject |  Edit
+
+✅ 4. Clicking "Edit" opens a form with pre-filled listing data that can be updated
+
+✅ 5. Use Next.js API routes to simulate listing approval/rejection (store in memory or use SQLite)
+
+✅ 6. Use getServerSideProps for the dashboard page
+
+✅ 7. Protect dashboard routes (auth logic)
+
+✅ 8. Use React state management (Context API )
+
+✅ 9. Add filtering by listing status (approved, pending, rejected)
+
+✅ 10. /api/listings shows the json of paginated listings
+
+* Click on Guest on Sidebar to Login *
+
